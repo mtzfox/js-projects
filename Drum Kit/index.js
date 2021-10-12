@@ -1,6 +1,7 @@
 // creates an array of HTML elements
 const nums = document.querySelectorAll(".keys .key");
 
+function startPlaying() {}
 // for each elements in the array
 for (let num of nums) {
   //find the data-key value and assign
@@ -8,12 +9,15 @@ for (let num of nums) {
 
   // listen for mouseup event
   num.addEventListener("mouseup", (event) => {
-    //prevent default
+    // prevent default
     event.preventDefault();
-    //log the element for testing
+    // log the element for testing
     console.log(document.querySelector(`audio[data-key="${datakey}"]`));
-    // find the cooresponding audio element and play, then stop
+    // add playing class to css
+    num.classList.add("playing");
+    // find the cooresponding audio element and play
     document.querySelector(`audio[data-key="${datakey}"]`).play();
-    document.querySelector(`audio[data-key="${datakey}"]`).stop();
+    // remove the playing element after .1 seconds to give animation effect
+    setInterval(() => num.classList.remove("playing"), 100);
   });
 }
