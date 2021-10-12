@@ -1,23 +1,25 @@
-// creates an array of HTML elements
-const nums = document.querySelectorAll(".keys .key");
+function drumkit() {
+  const nums = document.querySelectorAll(".keys .key");
+  console.log(nums);
 
-function startPlaying() {}
-// for each elements in the array
-for (let num of nums) {
-  //find the data-key value and assign
-  let datakey = num.attributes["data-key"].value;
+  // creates an array of HTML elements - defaults to false
+  for (let num of nums) {
+    let playing = false,
+      name = num.querySelector(".sound").innerHTML,
+      drumkey = num.attributes["data-key"].value, // num key
+      drum = document.querySelector(`audio[data-key="${drumkey}"]`); // sound
 
-  // listen for mouseup event
-  num.addEventListener("mouseup", (event) => {
-    // prevent default
-    event.preventDefault();
-    // log the element for testing
-    console.log(document.querySelector(`audio[data-key="${datakey}"]`));
-    // add playing class to css
-    num.classList.add("playing");
-    // find the cooresponding audio element and play
-    document.querySelector(`audio[data-key="${datakey}"]`).play();
-    // remove the playing element after .1 seconds to give animation effect
-    setInterval(() => num.classList.remove("playing"), 100);
-  });
+    // On mouseup, playing
+    num.addEventListener("mouseup", (event) => {
+      event.preventDefault();
+      playing = true;
+      console.log(name);
+
+      drum.play(); // play sound
+      num.classList.add("playing"); // add border but then remove instantly
+      setInterval(() => num.classList.remove("playing"), 200);
+    });
+  }
 }
+
+drumkit();
