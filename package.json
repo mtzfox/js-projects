@@ -1,0 +1,24 @@
+{
+  "name": "js-projects",
+  "version": "1.0.0",
+  "description": "Drum kit completed exercise from Javascript 30",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon --exec babel-node src/index.js",
+    "test": "jest --config ./jest.config.json",
+    "test:watch": "npm run test -- --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/redfoxseattle/js-projects.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/redfoxseattle/js-projects/issues"
+  },
+  "homepage": "https://github.com/redfoxseattle/js-projects#readme",
+  "devDependencies": {
+    "jest": "^27.3.1"
+  }
+}
