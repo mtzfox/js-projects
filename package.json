@@ -1,7 +1,7 @@
 {
   "name": "js-projects",
   "version": "1.0.0",
-  "description": "Drum kit completed exercise from Javascript 30",
+  "description": "Testing files for Javascript 30",
   "main": "index.js",
   "scripts": {
     "start": "nodemon --exec babel-node src/index.js",
