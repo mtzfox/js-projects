@@ -1,4 +1,4 @@
-import { hello, fancyEs6Stuff } from './index'
+import { arrayCardio } from './index'
 
 function wait(ms) {
   return new Promise((resolve) => {
