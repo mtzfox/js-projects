@@ -1,6 +1,4 @@
-import {sumItems} from "./arrayCardio.js";
-
-
+const flexPanel = require('./index.js');
 
 //console.log(arrayCardio)
 
