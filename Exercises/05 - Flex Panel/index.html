@@ -37,15 +37,20 @@
   </div>
 
 <script>
+/* Create node list of each panel */
 const panels = document.querySelectorAll('.panel');
 console.log(panels)
 
+/* Adds class .open to class list of panel clicked */
 function toggleOn() {
   this.classList.toggle('open');
 }
 
+/* After the open transition, we want to add the transitions for top/bottom items */
 function toggleAction(event) {
-  console.log(this.classList)
+  //console.log(this.classList)
+  // toggleOn listens for class being added, then once it's added checks for the flex property
+  // .includes('flex') makes sure that it will check on either browser instead of flex or flex-grow
   if (event.propertyName.includes('flex')) {
     this.classList.toggle('active');
   }
