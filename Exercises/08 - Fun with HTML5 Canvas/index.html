@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>HTML5 Canvas</title>
+	</head>
+	<body>
+		<canvas id="draw" width="200" height="100"></canvas>
+
+		<script>
+			const canvas = document.querySelector('#draw');
+
+			const ctx = canvas.getContext('2d');
+
+			canvas.width = window.innerWidth;
+			canvas.height = window.innerHeight;
+			ctx.strokeStyle = '#BADA55';
+			// make sure that the drawing is rounded
+			ctx.lineJoin = 'round';
+			ctx.lineCap = 'round';
+			ctx.lineWidth = 100;
+
+			// You can add filters like multiple, subtract, lighten - really cool options
+			// https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/globalCompositeOperation
+			ctx.globalCompositeOperation = 'xor';
+
+			// is the mouse down?
+			let isDrawing = false;
+
+			// Where does the line start/stop?
+			let lastX = 0;
+			let lastY = 0;
+
+			let hue = 0; // where does the color HSL start?
+			let direction = true; //
+
+			function draw(e) {
+				// stop the function when not mouse down
+				if (!isDrawing) return;
+				console.log(e);
+
+				// starts at 1, but after each function call it increments below
+				ctx.strokeStyle = `hsl(${hue}, 100%, 50%)`;
+
+				ctx.beginPath();
+
+				// Start from
+				ctx.moveTo(lastX, lastY);
+				// Go to
+				ctx.lineTo(e.offsetX, e.offsetY);
+				// Create stroke on canvas
+				ctx.stroke();
+				// New location will be wherever last clicked
+				[lastX, lastY] = [e.offsetX, e.offsetY];
+				//lastX = e.offsetX; - same as above
+				//lastY = e.offsetY;
+
+				// increment hue
+				hue++;
+				// resets hue when it reaches a certain amount
+				if (hue >= 360) {
+					hue = 0;
+				}
+				// If the linewidth is too big or small, flip direction
+				if (ctx.lineWidth >= 200 || ctx.lineWidth <= 1) {
+					direction = !direction;
+				}
+				// depending on direction, increment or decrement
+				if (direction) {
+					ctx.lineWidth++;
+				} else {
+					ctx.lineWidth--;
+				}
+			}
+
+			// This makes sure that the draw starts where the X,Y goes down
+			canvas.addEventListener('mousedown', (e) => {
+				isDrawing = true;
+				[lastX, lastY] = [e.offsetX, e.offsetY];
+			});
+
+			// returns the information about mouse location as it moves
+			canvas.addEventListener('mousemove', draw);
+
+			// Makes sure that it doesn't count drawing outside of the canvas
+
+			canvas.addEventListener('mouseup', () => (isDrawing = false));
+			canvas.addEventListener('mouseout', () => (isDrawing = false));
+		</script>
+
+		<style>
+			html,
+			body {
+				margin: 0;
+			}
+		</style>
+	</body>
+</html>
