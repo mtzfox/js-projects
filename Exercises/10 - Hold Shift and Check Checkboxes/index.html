@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Hold Shift to Check Multiple Checkboxes</title>
+	</head>
+	<body>
+		<style>
+			html {
+				font-family: sans-serif;
+				background: #ffc600;
+			}
+
+			.inbox {
+				max-width: 400px;
+				margin: 50px auto;
+				background: white;
+				border-radius: 5px;
+				box-shadow: 10px 10px 0 rgba(0, 0, 0, 0.1);
+			}
+
+			.item {
+				display: flex;
+				align-items: center;
+				border-bottom: 1px solid #f1f1f1;
+			}
+
+			.item:last-child {
+				border-bottom: 0;
+			}
+
+			input:checked + p {
+				background: #f9f9f9;
+				text-decoration: line-through;
+			}
+
+			input[type='checkbox'] {
+				margin: 20px;
+			}
+
+			p {
+				margin: 0;
+				padding: 20px;
+				transition: background 0.2s;
+				flex: 1;
+				font-family: 'helvetica neue';
+				font-size: 20px;
+				font-weight: 200;
+				border-left: 1px solid #d1e2ff;
+			}
+		</style>
+		<!--
+   The following is a common layout you would see in an email client.
+
+   When a user clicks a checkbox, holds Shift, and then clicks another checkbox a few rows down, all the checkboxes inbetween those two checkboxes should be checked.
+
+  -->
+		<div class="inbox">
+			<div class="item">
+				<input type="checkbox" />
+				<p>This is an inbox layout.</p>
+			</div>
+			<div class="item">
+				<input type="checkbox" />
+				<p>Check one item</p>
+			</div>
+			<div class="item">
+				<input type="checkbox" />
+				<p>Hold down your Shift key</p>
+			</div>
+			<div class="item">
+				<input type="checkbox" />
+				<p>Check a lower item</p>
+			</div>
+			<div class="item">
+				<input type="checkbox" />
+				<p>Everything in between should also be set to checked</p>
+			</div>
+			<div class="item">
+				<input type="checkbox" />
+				<p>Try to do it without any libraries</p>
+			</div>
+			<div class="item">
+				<input type="checkbox" />
+				<p>Just regular JavaScript</p>
+			</div>
+			<div class="item">
+				<input type="checkbox" />
+				<p>Good Luck!</p>
+			</div>
+			<div class="item">
+				<input type="checkbox" />
+				<p>Don't forget to tweet your result!</p>
+			</div>
+		</div>
+
+		<script>
+			const checkBoxes = document.querySelectorAll(
+				'.inbox input[type="checkbox"]'
+			);
+
+			let lastChecked;
+
+			function handleCheck(e) {
+				// I found this was clearer, but he just did it as: if (this.checked && e.shiftKey)
+				let isChecked = this.checked;
+				let shiftDown = e.shiftKey;
+
+				let inBetween = false;
+				console.log(shiftDown.target);
+				if (isChecked && shiftDown) {
+					// now
+					// loop over checkboxes starting from 0
+					checkBoxes.forEach((checkBox) => {
+						// if current checkbox is current or last checked, toggle inBetween (flag variable)
+						// Order of this/lastChecked is what makes it work either direction
+						if (checkBox === this || checkBox === lastChecked) {
+							// This will alternate if it's starting or stopping checkbox
+							inBetween = !inBetween;
+						}
+						// if flagged - checked property is set to true
+						if (inBetween) {
+							checkBox.checked = true;
+						}
+					});
+				}
+				// once loop is over
+				lastChecked = this;
+			}
+
+			checkBoxes.forEach((checkBox) =>
+				checkBox.addEventListener('click', handleCheck)
+			);
+			//const checkBoxes = [...clickItems];
+
+			// function getCheckedList() {
+			// 	for (let i = 0; i < inputProps.length; i++) {
+			// 		let isChecked = inputProps[i].checked;
+			// 		checkedList[i] = inputProps[i].checked;
+			// 	}
+			// }
+			// function checkShiftKey(e) {
+			// 	e.shiftKey;
+			// }
+
+			// function getCheckBoxes() {
+			// 	checkBoxes
+			// }
+			//console.log(clickItems);
+			//console.log(checkBoxes);
+			// for (let box of checkBoxes) {
+			// 	box.addEventListener('change', function (e) {
+			// 		if (this.checked) {
+			// 			console.log('Checkbox is checked..');
+			// 			event.target.parentNode.classList.toggle('Checked');
+			// 			checkBoxes();
+			// 		}
+			// 		if (this.checked && e.shiftKey) {
+			// 			console.log('Checkbox is checked..');
+			// 			e.target.parentNode.classList.toggle('ShiftChecked');
+			// 			checkBoxes();
+			// 		} else {
+			// 			console.log('Not checked');
+			// 			e.target.parentNode.classList.toggle('Checked');
+			// 			checkBoxes();
+			// 		}
+			// 	});
+			// }
+
+			//clickMultipleCheckboxes();
+		</script>
+	</body>
+</html>
