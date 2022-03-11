@@ -98,12 +98,13 @@
 			const checkBoxes = document.querySelectorAll(
 				'.inbox input[type="checkbox"]'
 			);
+			console.log(checkBoxes);
 
 			let lastChecked;
 
 			function handleCheck(e) {
 				// I found this was clearer, but he just did it as: if (this.checked && e.shiftKey)
-				let isChecked = this.checked;
+				let isChecked = this.checked; // TODO - this is a todo
 				let shiftDown = e.shiftKey;
 
 				let inBetween = false;
